@@ -11,15 +11,9 @@
 #' @useDynLib rplomo, .registration = TRUE
 NULL
 
-#' Return string `"Hello world!"` to R.
+#' Passes a config to a model, then runs it. 
 #' @export
-hello_world <- function() .Call(wrap__hello_world)
-
-#' @export
-add <- function(x, y) .Call(wrap__add, x, y)
-
-#' @export
-run_model <- function(model, path_to_config) .Call(wrap__run_model, model, path_to_config)
+model_runner <- function(path_to_config, path_to_output, verbose) .Call(wrap__model_runner, path_to_config, path_to_output, verbose)
 
 
 # nolint end

@@ -9,3 +9,4 @@ name = 'rplomo'
 
 [dependencies]
 extendr-api = '*'
+plomo = {git="ssh://git@github.com/rileyleff/plomo.git"}
