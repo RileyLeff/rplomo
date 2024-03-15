@@ -9,7 +9,7 @@ name = 'rplomo'
 
 [dependencies]
 extendr-api = '*'
-plomo = {git="ssh://git@github.com/rileyleff/plomo.git"}
+plomo = {git="https://github.com/rileyleff/plomo.git"}
 polars = "0.38.2"
 thiserror = '*'
 toml = '*'
