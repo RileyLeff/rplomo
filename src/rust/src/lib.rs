@@ -1,8 +1,5 @@
 use extendr_api::prelude::*;
-use polars::prelude::*;
-use plomo::models::sperry;
-use std::fs::File;
-use toml;
+use plomo::{models::sperry, Model};
 
 /// Passes a config to a model, then runs it. 
 /// @export
@@ -20,6 +17,13 @@ fn model_runner(
     return o;
 }
 
+#[extendr]
+fn write_default_config(
+    path_to_write: String
+) -> String {
+    let _ = sperry::SperryConfig::serialize_default_to_path(path_to_write);
+    return String::from("ok")
+}
 
 
 // Passes a config to a model, then runs it. 
