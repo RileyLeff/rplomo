@@ -1,8 +1,10 @@
 # RPlomo
 
-A (very) thin R wrapper around a **Pl**ant **o**ptimization **mo**deling framework written in Rust.
+## Plant Optimization Models in R
 
-Currently under construction but needs to be public to access the free tier MacOS 14 + M1 runners.
+A (very) thin **R** wrapper around a **pl**ant **o**ptimization **mo**deling framework written in Rust.
+
+Currently under construction, but needs to be public to access the free tier MacOS 14 + M1 runners.
 
 Expect many breaking changes moving forward. 
 
