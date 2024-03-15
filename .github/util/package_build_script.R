@@ -1,72 +1,37 @@
-name: Build and Release
+meta <- Sys.info()
 
-on:
-  push:
-    tags:
-      - '*'
 
-jobs:
-  build:
-    runs-on: ${{ matrix.os }}
+# desc_path <- "DESCRIPTION"
+# version_info <- readLines(desc_path)[3]
+# extracted_version <- sub("^[^0-9]*", "", version_info)
 
-    strategy:
-      matrix:
-        os: [macos-14, macos-latest, windows-latest]
+build_dir <- "build"
+dir.create(build_dir)
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+output_path <- paste0(
+    tolower(meta['sysname']),
+    "_",
+    tolower(meta['machine']),
+    "_",
+    "testbuild",
+    # "_",
+    # extracted_version,
+    switch(
+        tolower(meta['sysname']), 
+        'windows' = '.zip', 
+        'darwin' = '.tgz', 
+        'linux-gnu' = '.tar.gz'
+    )
+)
 
-    - name: Set up Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
+please_no_output <- rextendr::document(quiet = TRUE)
 
-    - name: Set up R
-      uses: r-lib/actions/setup-r@v2
-
-    - name: Install dependencies
-      run: |
-        Rscript -e 'install.packages(c("rextendr", "devtools"))'
-        Rscript -e 'remotes::install_cran("roxygen2")'
-
-    - name: Build and Document
-      run: |
-        Rscript .github/util/package_build_script.R
-
-    - name: Upload Release Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: release-artifacts-${{ runner.os }}
-        path: build/*
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - name: Download Release Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        pattern: release-artifacts-*
-        path: bin 
-        merge-multiple: true     
-
-    - name: Stupid Fucking ls bin folder Because I'm An Idiot
-      run: |
-        ls -R bin
-
-    - name: Create Release
-      id: create_release
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        body: Pre-built package binaries for version ${{ github.ref }}
-        files: |
-          bin/darwin_x86_64_testbuild.tgz
-          bin/windows_x86_64_testbuild.zip
-        draft: false
-        prerelease: false
+please_no_output <- devtools::build(
+    quiet = TRUE, 
+    binary = TRUE, 
+    path = paste(
+        build_dir, 
+        output_path, 
+        sep = "/"
+    )
+)
