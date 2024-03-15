@@ -13,7 +13,7 @@ output_path <- paste0(
     "_",
     tolower(meta['machine']),
     "_",
-    "testbuild",
+    "rplomo",
     # "_",
     # extracted_version,
     switch(
