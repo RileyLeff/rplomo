@@ -1,13 +1,26 @@
 use extendr_api::prelude::*;
-use plomo::models::sperry::{SperryModel, SperryData, SperryConfig};
+use polars::prelude::*;
+use plomo::models::sperry;
+use std::fs::File;
+use toml;
 
 /// Passes a config to a model, then runs it. 
 /// @export
 #[extendr]
-fn model_runner(path_to_config: String, path_to_output: String, verbose: bool) -> Result<f64> {
-    let to_out: std::path::PathBuf = path_to_config.into();
-    let the_model = SperryModel::new();
+fn model_runner(
+    path_to_config: String,
+    path_to_data: String, 
+    path_to_output: String
+) -> String {
+    let m = sperry::SperryModel::try_new_from_paths(path_to_config, path_to_data)
+        .expect("bad model, fail");
+
+    let o = m.execute(path_to_output);
+    
+    return o;
 }
+
+
 
 // Passes a config to a model, then runs it. 
 // @export
