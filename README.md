@@ -1,4 +1,4 @@
-# RPlomo
+# rplomo
 
 ## Plant Optimization Models in R
 
