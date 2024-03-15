@@ -17,11 +17,13 @@ fn model_runner(
     return o;
 }
 
+/// saves config to a path 
+/// @export
 #[extendr]
 fn write_default_config(
     path_to_write: String
 ) -> String {
-    let _ = sperry::SperryConfig::serialize_default_to_path(path_to_write);
+    let x = sperry::SperryConfig::serialize_default_to_path(path_to_write);
     return String::from("ok")
 }
 
@@ -40,4 +42,5 @@ fn write_default_config(
 extendr_module! {
     mod rplomo;
     fn model_runner;
+    fn write_default_config;
 }
