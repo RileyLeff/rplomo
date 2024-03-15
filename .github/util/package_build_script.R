@@ -1,0 +1,72 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-14, macos-latest, windows-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v2
+
+    - name: Install dependencies
+      run: |
+        Rscript -e 'install.packages(c("rextendr", "devtools"))'
+        Rscript -e 'remotes::install_cran("roxygen2")'
+
+    - name: Build and Document
+      run: |
+        Rscript .github/util/package_build_script.R
+
+    - name: Upload Release Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-artifacts-${{ runner.os }}
+        path: build/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Download Release Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        pattern: release-artifacts-*
+        path: bin 
+        merge-multiple: true     
+
+    - name: Stupid Fucking ls bin folder Because I'm An Idiot
+      run: |
+        ls -R bin
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        body: Pre-built package binaries for version ${{ github.ref }}
+        files: |
+          bin/darwin_x86_64_testbuild.tgz
+          bin/windows_x86_64_testbuild.zip
+        draft: false
+        prerelease: false

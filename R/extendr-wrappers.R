@@ -13,7 +13,11 @@ NULL
 
 #' Passes a config to a model, then runs it. 
 #' @export
-model_runner <- function(path_to_config, path_to_output, verbose) .Call(wrap__model_runner, path_to_config, path_to_output, verbose)
+model_runner <- function(path_to_config, path_to_data, path_to_output) .Call(wrap__model_runner, path_to_config, path_to_data, path_to_output)
+
+#' saves config to a path 
+#' @export
+write_default_config <- function(path_to_write) .Call(wrap__write_default_config, path_to_write)
 
 
 # nolint end

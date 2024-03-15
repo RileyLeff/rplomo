@@ -727,8 +727,8 @@ dependencies = [
 
 [[package]]
 name = "plomo"
-version = "0.1.3"
-source = "git+ssh://git@github.com/rileyleff/plomo.git#5d7ecdf65c985f21139f9bfc368c229969d9b17e"
+version = "0.1.4"
+source = "git+ssh://git@github.com/rileyleff/plomo.git#c335c951198d6a38ee51997dcf7485e841639eb7"
 dependencies = [
  "floco",
  "polars 0.36.2",

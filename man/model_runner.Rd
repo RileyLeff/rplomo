@@ -4,7 +4,7 @@
 \alias{model_runner}
 \title{Passes a config to a model, then runs it.}
 \usage{
-model_runner(path_to_config, path_to_output, verbose)
+model_runner(path_to_config, path_to_data, path_to_output)
 }
 \description{
 Passes a config to a model, then runs it.
