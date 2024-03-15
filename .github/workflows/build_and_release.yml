@@ -37,7 +37,7 @@ jobs:
     - name: Upload Release Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: release-artifacts-${{ runner.os }}
+        name: release-artifacts-${{ runner.os }}-${{ github.run_number }}
         path: build/*
 
   release:
@@ -62,6 +62,7 @@ jobs:
         tag_name: ${{ github.ref }}
         body: Pre-built package binaries for version ${{ github.ref }}
         files: |
+          bin/darwin_arm64_rplomo.tgz
           bin/darwin_x86_64_testbuild.tgz
           bin/windows_x86_64_testbuild.zip
         draft: false
