@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
@@ -30,6 +30,7 @@ jobs:
         cache-directories: |
           src/.cargo
           src/rust
+        cache-on-failure: true
 
 
     - name: Set up R
