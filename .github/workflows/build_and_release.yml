@@ -25,9 +25,11 @@ jobs:
     - name: Set up Rust cache stuff
       uses: Swatinem/rust-cache@v2
       with:
+        workspaces: |
+          src/rust
         cache-directories: |
-          "src/.cargo"
-          "src/rust"
+          src/.cargo
+          src/rust
 
 
     - name: Set up R
