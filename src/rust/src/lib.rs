@@ -23,7 +23,7 @@ fn model_runner(
 fn write_default_config(
     path_to_write: String
 ) -> String {
-    let x = sperry::SperryConfig::serialize_default_to_path(path_to_write);
+    let _x = sperry::SperryConfig::serialize_default_to_path(path_to_write);
     return String::from("ok")
 }
 
