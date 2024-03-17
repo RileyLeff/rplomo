@@ -5,6 +5,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -77,7 +80,7 @@ jobs:
         body: Pre-built package binaries for version ${{ github.ref }}
         files: |
           bin/darwin_arm64_rplomo.tgz
-          bin/darwin_x86_64_testbuild.tgz
-          bin/windows_x86_64_testbuild.zip
+          bin/darwin_x86_64_rplomo.tgz
+          bin/windows_x86-64_rplomo.zip
         draft: false
         prerelease: false
