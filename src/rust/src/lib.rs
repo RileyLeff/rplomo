@@ -8,13 +8,17 @@ fn model_runner(
     path_to_config: String,
     path_to_data: String, 
     path_to_output: String
-) -> String {
+) -> &'static str {
     let m = sperry::SperryModel::try_new_from_paths(path_to_config, path_to_data)
         .expect("bad model, fail");
 
     let o = m.execute(path_to_output);
     
-    return o;
+    // return o;
+
+    let s: &'static str = "This is a static string";
+
+    return s;
 }
 
 /// saves config to a path 
@@ -22,9 +26,12 @@ fn model_runner(
 #[extendr]
 fn write_default_config(
     path_to_write: String
-) -> String {
+) -> &'static str {
     let _x = sperry::SperryConfig::serialize_default_to_path(path_to_write);
-    return String::from("ok")
+    //return String::from("ok")
+    let s: &'static str = "This is a static string";
+
+    return s;
 }
 
 
